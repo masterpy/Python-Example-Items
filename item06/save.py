@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 print 'Content-type: text/html\n'
 
@@ -16,12 +17,12 @@ filename = form.getvalue('filename')
 password = form.getvalue('password')
 
 if not (filename and text and password):
-        print 'Invalid parameters'
-        sys.exit()
+    print 'Invalid parameters'
+    sys.exit()
 
 if sha.sha(password).hexdigest() != '8843d7f92416211de9ebb963ff4ce28125932878':
-        print 'Invalid password'
-        sys.exit()
+    print 'Invalid password'
+    sys.exit()
 
 f = open(join(BASE_DIR, filename), 'w')
 f.write(text)

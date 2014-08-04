@@ -1,5 +1,5 @@
 #!usr/bin/env python
-
+# coding=utf-8
 
 print 'Content-type: text/html\n'
 
@@ -18,7 +18,7 @@ if not filename:
 
 try:
     text = open(join(BASE_DIR, filename)).read()
-except Exception, data:
+except Exception as data:
     print str(data)
 
 

@@ -1,15 +1,22 @@
 #!/usr/bin/python
+# coding=utf-8
 
 print 'Content-type:text/html\n'
 
-import cgitb;cgitb.enable()
+import cgitb
+cgitb.enable()
 
 import MySQLdb
 
-conn = MySQLdb.connect(db='usernet',host='127.0.0.1',user='root',passwd='root')
+conn = MySQLdb.connect(
+    db='usernet',
+    host='127.0.0.1',
+    user='root',
+    passwd='root')
 curs = conn.cursor()
 
-import cgi, sys
+import cgi
+import sys
 form = cgi.FieldStorage()
 id = form.getvalue('id')
 
@@ -22,17 +29,18 @@ print '''
     <h1>View Message</h1>
     '''
 
-try: id = int(id)
+try:
+    id = int(id)
 except:
-        print 'Invalid message ID'
-        sys.exit()
+    print 'Invalid message ID'
+    sys.exit()
 
 curs.execute('SELECT * FROM message WHERE id = %i' % id)
 rows = curs.fetchall()
 
 if not rows:
-        print 'Unknown message ID'
-        sys.exit()
+    print 'Unknown message ID'
+    sys.exit()
 
 row = rows[0]
 
@@ -46,4 +54,4 @@ print '''
 |<a href="edit.cgi?reply_to=%s">Reply</a>
 </body>
 </html>
-''' % (row[1],row[2],row[4],row[0])
+''' % (row[1], row[2], row[4], row[0])

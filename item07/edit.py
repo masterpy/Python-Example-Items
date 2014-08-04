@@ -1,14 +1,22 @@
 #!/usr/bin/python
+# coding=utf-8
 
 print 'Content-type:text/html\n'
 
-import cgitb;cgitb.enable()
+import cgitb
+cgitb.enable()
 
 import MySQLdb
-conn = MySQLdb.connect(db='usernet',host='127.0.0.1',user='root',passwd='root')
+conn = MySQLdb.connect(
+    db='usernet',
+    host='127.0.0.1',
+    user='root',
+    passwd='root')
 curs = conn.cursor()
 
-import cgi,sys
+import cgi
+import sys
+
 form = cgi.FieldStorage()
 reply_to = form.getvalue('reply_to')
 
@@ -25,11 +33,11 @@ print '''
 
 subject = ''
 if reply_to is not None:
-        print '<input type="hidden" name="reply_to" value="%s"/>' % reply_to
-        curs.execute('SELECT subject FROM message WHERE id = %s' % reply_to)
-        subject = curs.fetchone()[0]
-        if not subject.startswith('Re: '):
-                subject = 'Re:  ' + subject
+    print '<input type="hidden" name="reply_to" value="%s"/>' % reply_to
+    curs.execute('SELECT subject FROM message WHERE id = %s' % reply_to)
+    subject = curs.fetchone()[0]
+    if not subject.startswith('Re: '):
+        subject = 'Re:  ' + subject
 print '''
     <b>Subject:</b><br/>
     <input type='text' size='40' name='subject' value='%s' /><br/>
